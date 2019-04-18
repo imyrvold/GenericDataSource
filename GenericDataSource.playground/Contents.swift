@@ -37,32 +37,29 @@ protocol Configure {
     func configure<Model: ConfigureModel>(with value: Model) where Model.ModelType == ConfigureType
 }
 
-class ConfigureCell<ConfigureType>: UITableViewCell, Configure {
+class ConfigureCell: UITableViewCell {
     
-    func configure<Model: ConfigureModel>(with value: Model) where ConfigureType == Model.ModelType {
+    func configure<Model: ConfigureModel>(with value: Model) {
         let description = value.modelDescription()
         
         print("ConfigureCell description: \(description)")
     }
 }
 
-let confCell = ConfigureCell<Tag>()
-confCell.configure(with: tag)
-
-/*
-class ObjectDataSource<T: ConfigureModel>: NSObject /*where T == ConfigureModel.ModelType*/ {
+class ObjectDataSource<T: ConfigureModel>: NSObject {
     var values: [T] = []
     
     func cellForRow(at indexPath: IndexPath) {
         let item = self.values[indexPath.row]
-        let cell = ConfigureCell<Tag>()
+        let cell = ConfigureCell()
         
         cell.configure(with: item)
     }
 }
 
 let dataSource = ObjectDataSource<Tag>()
+dataSource.values = [tag]
 
 let indexPath = IndexPath(row: 0, section: 0)
 dataSource.cellForRow(at: indexPath)
-*/
+
